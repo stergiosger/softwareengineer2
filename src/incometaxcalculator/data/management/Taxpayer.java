@@ -17,7 +17,12 @@ public abstract class Taxpayer {
   private static final short TRAVEL = 2;
   private static final short HEALTH = 3;
   private static final short OTHER = 4;
-
+//////////////////////////////////
+  private static final short[] kindss= {ENTERTAINMENT,BASIC,TRAVEL,HEALTH,OTHER};
+  
+  private String[] kinds= {"Entertainment","Basic","Travel","Health","Other"};
+/////////////////////////////////// 
+  
   public abstract double calculateBasicTax();
 
   protected Taxpayer(String fullname, int taxRegistrationNumber, float income) {
@@ -25,7 +30,8 @@ public abstract class Taxpayer {
     this.taxRegistrationNumber = taxRegistrationNumber;
     this.income = income;
   }
-
+  
+/*
   public void addReceipt(Receipt receipt) throws WrongReceiptKindException {
     if (receipt.getKind().equals("Entertainment")) {
       amountPerReceiptsKind[ENTERTAINMENT] += receipt.getAmount();
@@ -43,9 +49,40 @@ public abstract class Taxpayer {
     receiptHashMap.put(receipt.getId(), receipt);
     totalReceiptsGathered++;
   }
-
+*/
+  
+  public void addReceipt(Receipt receipt) throws WrongReceiptKindException {
+    if (receipt.getKind().contains("Entertainment") || receipt.getKind().contains("Basic") || receipt.getKind().contains("Health") || receipt.getKind().contains("Travel") || receipt.getKind().contains("Other")){
+      for (int i = 0; i < kinds.length; i++) {
+        //System.out.println(kinds[i]);
+        //System.out.println(receipt.getKind());
+        if (receipt.getKind().equals(kinds[i])) {
+          amountPerReceiptsKind[kindss[i]] += receipt.getAmount();
+        }
+        receiptHashMap.put(receipt.getId(), receipt);
+        totalReceiptsGathered++;
+        }  
+    }else {
+      throw new WrongReceiptKindException();
+    }
+  }
+      
+  
   public void removeReceipt(int receiptId) throws WrongReceiptKindException {
     Receipt receipt = receiptHashMap.get(receiptId);
+    if (receipt.getKind().contains("Entertainment") || receipt.getKind().contains("Basic") || receipt.getKind().contains("Health") || receipt.getKind().contains("Travel") || receipt.getKind().contains("Other")){
+      for (int i = 0; i < kinds.length; i++) {
+        if (receipt.getKind().equals(kinds[i])) {
+          amountPerReceiptsKind[kindss[i]] += receipt.getAmount();
+        }
+        receiptHashMap.put(receipt.getId(), receipt);
+        totalReceiptsGathered++;
+        }  
+    }else {
+      throw new WrongReceiptKindException();
+    }
+    
+    /*
     if (receipt.getKind().equals("Entertainment")) {
       amountPerReceiptsKind[ENTERTAINMENT] -= receipt.getAmount();
     } else if (receipt.getKind().equals("Basic")) {
@@ -61,6 +98,7 @@ public abstract class Taxpayer {
     }
     totalReceiptsGathered--;
     receiptHashMap.remove(receiptId);
+    */
   }
 
   public String getFullname() {
@@ -79,6 +117,10 @@ public abstract class Taxpayer {
     return receiptHashMap;
   }
 
+  ///////////////////////////////////
+  private double[] calculation= {calculateBasicTax()*0.08,calculateBasicTax() * 0.04,-calculateBasicTax() * 0.15};
+  /////////////////////////////////
+  
   public double getVariationTaxOnReceipts() {
     float totalAmountOfReceipts = getTotalAmountOfReceipts();
     if (totalAmountOfReceipts < 0.2 * income) {

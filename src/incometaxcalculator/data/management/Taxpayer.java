@@ -87,21 +87,21 @@ public abstract class Taxpayer {
     return receiptHashMap;
   }
 
-  ///////////////////////////////////
-  private double[] calculation= {calculateBasicTax()*0.08,calculateBasicTax() * 0.04,-calculateBasicTax() * 0.15};
-  /////////////////////////////////
   
   public double getVariationTaxOnReceipts() {
+    
     float totalAmountOfReceipts = getTotalAmountOfReceipts();
-    if (totalAmountOfReceipts < 0.2 * income) {
-      return calculateBasicTax() * 0.08;
-    } else if (totalAmountOfReceipts < 0.4 * income) {
-      return calculateBasicTax() * 0.04;
-    } else if (totalAmountOfReceipts < 0.6 * income) {
-      return -calculateBasicTax() * 0.15;
-    } else {
-      return -calculateBasicTax() * 0.3;
+    double[] conditions= {0.2 * income,0.4 * income,0.6 * income};
+    HashMap<Double,Double> calculations=new HashMap<Double,Double>(){{
+      put(0.2 * income,calculateBasicTax() * 0.08);
+      put(0.4 * income,calculateBasicTax() * 0.04);
+      put(0.6 * income,-calculateBasicTax() * 0.15);
+    }};
+    
+    for(double cond: conditions) {
+      if(totalAmountOfReceipts<cond) return calculations.get(cond);          
     }
+    return -calculateBasicTax() * 0.3;   
   }
 
   private float getTotalAmountOfReceipts() {

@@ -111,6 +111,11 @@ public class TaxpayerManager {
 
   public void saveLogFile(int taxRegistrationNumber, String fileFormat)
       throws IOException, WrongFileFormatException {
+    if(new FileWriterFactory().createFileWriter(fileFormat)!=null)
+      new FileWriterFactory().createFileWriter(fileFormat).generateFile(taxRegistrationNumber);
+    else
+      throw new WrongFileFormatException();
+    /*
     if (fileFormat.equals("txt")) {
       TXTLogWriter writer = new TXTLogWriter();
       writer.generateFile(taxRegistrationNumber);
@@ -120,7 +125,9 @@ public class TaxpayerManager {
     } else {
       throw new WrongFileFormatException();
     }
+    */
   }
+  
 
   public boolean containsTaxpayer(int taxRegistrationNumber) {
     if (taxpayerHashMap.containsKey(taxRegistrationNumber)) {
@@ -153,6 +160,11 @@ public class TaxpayerManager {
       WrongTaxpayerStatusException, WrongReceiptKindException, WrongReceiptDateException {
 
     String ending[] = fileName.split("\\.");
+    if(new FileReaderFactory().createFileReader(ending[1])!=null)
+      new FileReaderFactory().createFileReader(ending[1]).readFile(fileName);
+    else
+      throw new WrongFileEndingException();
+    /*
     if (ending[1].equals("txt")) {
       FileReader reader = new TXTFileReader();
       reader.readFile(fileName);
@@ -161,7 +173,7 @@ public class TaxpayerManager {
       reader.readFile(fileName);
     } else {
       throw new WrongFileEndingException();
-    }
+    }*/
   }
 
   public String getTaxpayerName(int taxRegistrationNumber) {

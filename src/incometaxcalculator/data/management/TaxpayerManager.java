@@ -26,7 +26,16 @@ public class TaxpayerManager {
 
   public void createTaxpayer(String fullname, int taxRegistrationNumber, String status,
       float income) throws WrongTaxpayerStatusException {
-
+    
+    TaxpayerFactory taxpayerF=new TaxpayerFactory();
+    Taxpayer taxpayer=taxpayerF.createTaxpayerModel(status, fullname, taxRegistrationNumber, income);
+    
+    if(taxpayer!=null) 
+      taxpayerHashMap.put(taxRegistrationNumber,taxpayer);
+    else
+      throw new WrongTaxpayerStatusException();
+   
+    /*
     if (status.equals("Married Filing Jointly")) {
       taxpayerHashMap.put(taxRegistrationNumber,
           new MarriedFilingJointlyTaxpayer(fullname, taxRegistrationNumber, income));
@@ -41,7 +50,7 @@ public class TaxpayerManager {
           new HeadOfHouseholdTaxpayer(fullname, taxRegistrationNumber, income));
     } else {
       throw new WrongTaxpayerStatusException();
-    }
+    }*/
   }
 
   public void createReceipt(int receiptId, String issueDate, float amount, String kind,

@@ -96,13 +96,13 @@ public class TaxpayerManager {
 
   private void updateFiles(int taxRegistrationNumber) throws IOException {
     if (new File(taxRegistrationNumber + "_INFO.xml").exists()) {
-      new XMLInfoWriter().generateFile(taxRegistrationNumber);
+      new FileInfoFactory().updateInfoFile(taxRegistrationNumber, "_INFO.xml");
     } else {
-      new TXTInfoWriter().generateFile(taxRegistrationNumber);
+      new FileInfoFactory().updateInfoFile(taxRegistrationNumber, "_INFO.txt");
       return;
     }
     if (new File(taxRegistrationNumber + "_INFO.txt").exists()) {
-      new TXTInfoWriter().generateFile(taxRegistrationNumber);
+      new FileInfoFactory().updateInfoFile(taxRegistrationNumber, "_INFO.txt");
     }
   }
 

@@ -95,7 +95,10 @@ public class TaxpayerManager {
   }
 
   private void updateFiles(int taxRegistrationNumber) throws IOException {
-    if (new File(taxRegistrationNumber + "_INFO.xml").exists()) {
+    if (new File(taxRegistrationNumber + "_INFO.xml").exists())
+      new FileInfoFactory().updateInfoFile(taxRegistrationNumber, "_INFO.xml");
+    new FileInfoFactory().updateInfoFile(taxRegistrationNumber, "_INFO.txt");  
+    /*if (new File(taxRegistrationNumber + "_INFO.xml").exists()) {
       new FileInfoFactory().updateInfoFile(taxRegistrationNumber, "_INFO.xml");
     } else {
       new FileInfoFactory().updateInfoFile(taxRegistrationNumber, "_INFO.txt");
@@ -103,7 +106,7 @@ public class TaxpayerManager {
     }
     if (new File(taxRegistrationNumber + "_INFO.txt").exists()) {
       new FileInfoFactory().updateInfoFile(taxRegistrationNumber, "_INFO.txt");
-    }
+    }*/
   }
 
   public void saveLogFile(int taxRegistrationNumber, String fileFormat)

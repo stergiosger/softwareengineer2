@@ -6,17 +6,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import incometaxcalculator.data.management.Receipt;
+//////////////////////////////////////////
+import incometaxcalculator.data.management.TaxpayerManager;
+////////////////////////////////////////////////
 
-public class TXTInfoWriter extends FileWriter {
+public class TXTInfoWriter implements FileWriter {
 
   public void generateFile(int taxRegistrationNumber) throws IOException {
-
+    ///////////////////////////////////
+    TaxpayerManager manager = new TaxpayerManager();
+    /////////////////////////////////////
     PrintWriter outputStream = new PrintWriter(
         new java.io.FileWriter(taxRegistrationNumber + "_INFO.txt"));
-    outputStream.println("Name: " + getTaxpayerName(taxRegistrationNumber));
+    outputStream.println("Name: " + manager.getTaxpayerName(taxRegistrationNumber));
     outputStream.println("AFM: " + taxRegistrationNumber);
-    outputStream.println("Status: " + getTaxpayerStatus(taxRegistrationNumber));
-    outputStream.println("Income: " + getTaxpayerIncome(taxRegistrationNumber));
+    outputStream.println("Status: " + manager.getTaxpayerStatus(taxRegistrationNumber));
+    outputStream.println("Income: " + manager.getTaxpayerIncome(taxRegistrationNumber));
     outputStream.println();// den mas emfanize to \n se aplo notepad
     outputStream.println("Receipts:");
     outputStream.println();
@@ -24,9 +29,48 @@ public class TXTInfoWriter extends FileWriter {
     outputStream.close();
   }
 
-  private void generateTaxpayerReceipts(int taxRegistrationNumber, PrintWriter outputStream) {
+  
+  public int getReceiptId(Receipt receipt) {
+    return receipt.getId();
+  }
 
-    HashMap<Integer, Receipt> receiptsHashMap = getReceiptHashMap(taxRegistrationNumber);
+  public String getReceiptIssueDate(Receipt receipt) {
+    return receipt.getIssueDate();
+  }
+
+  public String getReceiptKind(Receipt receipt) {
+    return receipt.getKind();
+  }
+
+  public float getReceiptAmount(Receipt receipt) {
+    return receipt.getAmount();
+  }
+
+  public String getCompanyName(Receipt receipt) {
+    return receipt.getCompany().getName();
+  }
+
+  public String getCompanyCountry(Receipt receipt) {
+    return receipt.getCompany().getCountry();
+  }
+
+  public String getCompanyCity(Receipt receipt) {
+    return receipt.getCompany().getCity();
+  }
+
+  public String getCompanyStreet(Receipt receipt) {
+    return receipt.getCompany().getStreet();
+  }
+
+  public int getCompanyNumber(Receipt receipt) {
+    return receipt.getCompany().getNumber();
+  }
+  
+  private void generateTaxpayerReceipts(int taxRegistrationNumber, PrintWriter outputStream) {
+    ///////////////////////////////
+    TaxpayerManager manager = new TaxpayerManager();
+    //////////////////////////////////
+    HashMap<Integer, Receipt> receiptsHashMap = manager.getReceiptHashMap(taxRegistrationNumber);
     Iterator<HashMap.Entry<Integer, Receipt>> iterator = receiptsHashMap.entrySet().iterator();
     while (iterator.hasNext()) {
       HashMap.Entry<Integer, Receipt> entry = iterator.next();

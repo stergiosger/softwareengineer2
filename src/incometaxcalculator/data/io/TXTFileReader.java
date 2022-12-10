@@ -6,7 +6,7 @@ public class TXTFileReader extends FileReader {
   protected int getReceiptId(String[] values) {
     if (values[0].equals("Receipt")) {
       if (values[1].equals("ID:")) {
-        int receiptId = Integer.parseInt(values[2].trim());
+        int receiptId = Integer.parseInt(values[2].trim());  
         return receiptId;
       }
     }

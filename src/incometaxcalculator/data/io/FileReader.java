@@ -2,6 +2,7 @@ package incometaxcalculator.data.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 import incometaxcalculator.data.management.TaxpayerManager;
 import incometaxcalculator.exceptions.WrongReceiptDateException;
@@ -31,7 +32,6 @@ public abstract class FileReader {
   public void readFile(String fileName)
       throws NumberFormatException, IOException, WrongTaxpayerStatusException,
       WrongFileFormatException, WrongReceiptKindException, WrongReceiptDateException {
-
     BufferedReader inputStream = new BufferedReader(new java.io.FileReader(fileName));
     String fullname = getValueOfField(inputStream.readLine());
     int taxRegistrationNumber = Integer.parseInt(getValueOfField(inputStream.readLine()));
@@ -91,7 +91,9 @@ public abstract class FileReader {
     String line;
     while (!isEmpty(line = inputStream.readLine())) {
       String values[] = line.split(" ", 3);
-       getReceiptId(values);             
+      int receiptId=getReceiptId(values);
+      if(receiptId<0) continue; 
+      return receiptId;             
     }
     return -1;
   }

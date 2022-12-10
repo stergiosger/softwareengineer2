@@ -13,7 +13,7 @@ public abstract class Taxpayer {
   private int totalReceiptsGathered = 0;
   private HashMap<Integer, Receipt> receiptHashMap = new HashMap<Integer, Receipt>(0);
  
-  private final static HashMap<String,Integer> receiptKinds=new HashMap<String,Integer>();
+  private static final HashMap<String,Integer> receiptKinds=new HashMap<String,Integer>();
   static {
     receiptKinds.put("ENTERTAINMENT", 0);
     receiptKinds.put("BASIC",1);

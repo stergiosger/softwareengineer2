@@ -158,10 +158,10 @@ public class TaxpayerManager {
   public void loadTaxpayer(String fileName)
       throws NumberFormatException, IOException, WrongFileFormatException, WrongFileEndingException,
       WrongTaxpayerStatusException, WrongReceiptKindException, WrongReceiptDateException {
-
     String ending[] = fileName.split("\\.");
-    if(new FileReaderFactory().createFileReader(ending[1])!=null)
-      new FileReaderFactory().createFileReader(ending[1]).readFile(fileName);
+    FileReader filereader=new FileReaderFactory().createFileReader(ending[1]);
+    if(filereader!=null)
+      filereader.readFile(fileName);
     else
       throw new WrongFileEndingException();
     /*

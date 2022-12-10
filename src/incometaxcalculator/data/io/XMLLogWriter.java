@@ -2,8 +2,10 @@ package incometaxcalculator.data.io;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
-public class XMLLogWriter extends FileWriter {
+//////////////////////////////
+import incometaxcalculator.data.management.TaxpayerManager;
+/////////////////////////////
+public class XMLLogWriter {
 
   private static final short ENTERTAINMENT = 0;
   private static final short BASIC = 1;
@@ -12,35 +14,38 @@ public class XMLLogWriter extends FileWriter {
   private static final short OTHER = 4;
 
   public void generateFile(int taxRegistrationNumber) throws IOException {
+    //////////////////////////////////////
+    TaxpayerManager manager = new TaxpayerManager();
+    //////////////////////////////////////
     PrintWriter outputStream = new PrintWriter(
         new java.io.FileWriter(taxRegistrationNumber + "_LOG.xml"));
-    outputStream.println("<Name> " + getTaxpayerName(taxRegistrationNumber) + " </Name>");
+    outputStream.println("<Name> " + manager.getTaxpayerName(taxRegistrationNumber) + " </Name>");
     outputStream.println("<AFM> " + taxRegistrationNumber + " </AFM>");
-    outputStream.println("<Income> " + getTaxpayerIncome(taxRegistrationNumber) + " </Income>");
+    outputStream.println("<Income> " + manager.getTaxpayerIncome(taxRegistrationNumber) + " </Income>");
     outputStream
-        .println("<BasicTax> " + getTaxpayerBasicTax(taxRegistrationNumber) + " </BasicTax>");
-    if (getTaxpayerVariationTaxOnReceipts(taxRegistrationNumber) > 0) {
+        .println("<BasicTax> " + manager.getTaxpayerBasicTax(taxRegistrationNumber) + " </BasicTax>");
+    if (manager.getTaxpayerVariationTaxOnReceipts(taxRegistrationNumber) > 0) {
       outputStream.println("<TaxIncrease> "
-          + getTaxpayerVariationTaxOnReceipts(taxRegistrationNumber) + " </TaxIncrease>");
+          + manager.getTaxpayerVariationTaxOnReceipts(taxRegistrationNumber) + " </TaxIncrease>");
     } else {
       outputStream.println("<TaxDecrease> "
-          + getTaxpayerVariationTaxOnReceipts(taxRegistrationNumber) + " </TaxDecrease>");
+          + manager.getTaxpayerVariationTaxOnReceipts(taxRegistrationNumber) + " </TaxDecrease>");
     }
     outputStream
-        .println("<TotalTax> " + getTaxpayerTotalTax(taxRegistrationNumber) + " </TotalTax>");
+        .println("<TotalTax> " + manager.getTaxpayerTotalTax(taxRegistrationNumber) + " </TotalTax>");
     outputStream.println(
-        "<Receipts> " + getTaxpayerTotalReceiptsGathered(taxRegistrationNumber) + " </Receipts>");
+        "<Receipts> " + manager.getTaxpayerTotalReceiptsGathered(taxRegistrationNumber) + " </Receipts>");
     outputStream.println(
-        "<Entertainment> " + getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, ENTERTAINMENT)
+        "<Entertainment> " + manager.getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, ENTERTAINMENT)
             + " </Entertainment>");
     outputStream.println(
-        "<Basic> " + getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, BASIC) + " </Basic>");
+        "<Basic> " + manager.getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, BASIC) + " </Basic>");
     outputStream.println(
-        "<Travel> " + getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, TRAVEL) + " </Travel>");
+        "<Travel> " + manager.getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, TRAVEL) + " </Travel>");
     outputStream.println(
-        "<Health> " + getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, HEALTH) + " </Health>");
+        "<Health> " + manager.getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, HEALTH) + " </Health>");
     outputStream.println(
-        "<Other> " + getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, OTHER) + " </Other>");
+        "<Other> " + manager.getTaxpayerAmountOfReceiptKind(taxRegistrationNumber, OTHER) + " </Other>");
     outputStream.close();
   }
 

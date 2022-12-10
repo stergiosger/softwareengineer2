@@ -9,8 +9,9 @@ import incometaxcalculator.data.management.Receipt;
 /////////////////////////////////////////
 import incometaxcalculator.data.management.TaxpayerManager;
 ///////////////////////////////////////////
-public class XMLInfoWriter implements FileWriter {
+public class XMLInfoWriter extends InfoWriter {
 
+  /*
   public void generateFile(int taxRegistrationNumber) throws IOException {
     //////////////////////////////////////////
     TaxpayerManager manager = new TaxpayerManager();
@@ -27,7 +28,13 @@ public class XMLInfoWriter implements FileWriter {
     generateTaxpayerReceipts(taxRegistrationNumber, outputStream);
     outputStream.close();
   }
-
+*/
+  @Override
+  protected String giveTaxpayerInfo(int i) {
+    String[] s = new String[]{"_INFO.xml","<Name>: ","<AFM>: ","<Status>: ","<Income>: ","<Receipts>:"};
+    //System.out.println(s[1]);
+    return  s[i];
+  };
   
   public int getReceiptId(Receipt receipt) {
     return receipt.getId();
@@ -65,6 +72,7 @@ public class XMLInfoWriter implements FileWriter {
     return receipt.getCompany().getNumber();
   }
   
+  /*
   private void generateTaxpayerReceipts(int taxRegistrationNumber, PrintWriter outputStream) {
     /////////////////////////////////////////
     TaxpayerManager manager = new TaxpayerManager();
@@ -86,5 +94,11 @@ public class XMLInfoWriter implements FileWriter {
       outputStream.println();
     }
   }
-
+*/
+  @Override
+  protected String giveReceiptInfo(int i) {
+    String[] s = new String[]{"<ReceiptID> ","<Date> ","<Kind> ","<Amount> ","<Company> ","<Country> ", "<City> ","<Street> ","<Number> "};
+    //System.out.println(s[1]);
+    return  s[i];
+  };
 }

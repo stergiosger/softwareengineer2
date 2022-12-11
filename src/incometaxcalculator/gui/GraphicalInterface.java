@@ -176,41 +176,6 @@ public class GraphicalInterface extends JFrame {
     btnSelectTaxpayer.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (taxpayerManager.containsTaxpayer()) {
-          String[] taxRegistrationNumbersList=new String[taxRegisterNumberList.getModel().getSize()];
-          for(int i=0; i<taxRegistrationNumbersList.length; i++) {
-            taxRegistrationNumbersList[i]=String.valueOf(taxRegisterNumberList.getModel().getElementAt(i));
-          }
-          String gettaxRegistrationNumber=(String) JOptionPane.showInputDialog(
-              null,
-              "What Tax Registration Number do you want to choose?",
-              "Choose Tax Registration Number",
-              JOptionPane.QUESTION_MESSAGE,
-              null,
-              taxRegistrationNumbersList,
-              null);
-          if (taxRegistrationNumbersList != null) {
-          int taxRegistrationNumber;
-            try {
-              taxRegistrationNumber = Integer.parseInt(gettaxRegistrationNumber);
-              if (taxpayerManager.containsTaxpayer(taxRegistrationNumber)) {
-                TaxpayerData taxpayerData = new TaxpayerData(taxRegistrationNumber,
-                    taxpayerManager);
-                taxpayerData.setVisible(true);
-              } else {
-                JOptionPane.showMessageDialog(null, "This tax registration number isn't loaded.");
-              }
-            } catch (NumberFormatException e1) {
-              JOptionPane.showMessageDialog(null, "You must give a tax registation number.");
-            } catch (Exception e1) {
-              e1.printStackTrace();
-            }
-          }
-        } else {
-          JOptionPane.showMessageDialog(null,
-              "There isn't any taxpayer loaded. Please load one first.");
-        }
-        
-        /*if (taxpayerManager.containsTaxpayer()) {
           String trn = JOptionPane.showInputDialog(null,
               "Give the tax registration number " + "that you want to be displayed : ");
           if (trn != null) {
@@ -233,10 +198,9 @@ public class GraphicalInterface extends JFrame {
         } else {
           JOptionPane.showMessageDialog(null,
               "There isn't any taxpayer loaded. Please load one first.");
-        }*/
+        }
       }
     });
-    
     btnSelectTaxpayer.setBounds(147, 0, 139, 23);
     contentPane.add(btnSelectTaxpayer);
 

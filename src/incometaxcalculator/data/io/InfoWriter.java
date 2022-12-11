@@ -22,11 +22,11 @@ public abstract class InfoWriter implements FileWriter {
     TaxpayerManager manager = new TaxpayerManager();
     /////////////////////////////////////
     PrintWriter outputStream = new PrintWriter(
-        new java.io.FileWriter(taxRegistrationNumber + giveTaxpayerInfo(0)));
-    outputStream.println(giveTaxpayerInfo(1) + manager.getTaxpayerName(taxRegistrationNumber));
-    outputStream.println(giveTaxpayerInfo(2) + taxRegistrationNumber);
-    outputStream.println(giveTaxpayerInfo(3) + manager.getTaxpayerStatus(taxRegistrationNumber));
-    outputStream.println(giveTaxpayerInfo(4) + manager.getTaxpayerIncome(taxRegistrationNumber));
+        new java.io.FileWriter(taxRegistrationNumber + giveTaxpayerInfo(0) + giveTaxpayerInfo(6)));
+    outputStream.println(giveTaxpayerInfo(1) + manager.getTaxpayerName(taxRegistrationNumber) + giveTaxpayerInfo(7));
+    outputStream.println(giveTaxpayerInfo(2) + taxRegistrationNumber + giveTaxpayerInfo(8));
+    outputStream.println(giveTaxpayerInfo(3) + manager.getTaxpayerStatus(taxRegistrationNumber) + giveTaxpayerInfo(9));
+    outputStream.println(giveTaxpayerInfo(4) + manager.getTaxpayerIncome(taxRegistrationNumber) + giveTaxpayerInfo(10));
     outputStream.println();// den mas emfanize to \n se aplo notepad
     outputStream.println(giveTaxpayerInfo(5));
     outputStream.println();

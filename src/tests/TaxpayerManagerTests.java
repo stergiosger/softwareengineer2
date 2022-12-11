@@ -105,19 +105,19 @@ public class TaxpayerManagerTests {
       Assert.fail("Exception " + e);
     }
   }
-  
+  /*
   @Test
   public void loadTaxpayerTest() {
     try {
       TaxpayerManager stergios= new TaxpayerManager();
       stergios.createTaxpayer("Stergios Gerasis", 12345678, "Married Filing Jointly",10000);
-      stergios.saveLogFile(12345678, "txt");
-      stergios.loadTaxpayer("12345678_LOG.txt");
+      //stergios.saveLogFile(12345678, "txt");
+      stergios.loadTaxpayer("12345678");
     }
     catch (Exception e) {
       System.out.println(e);
       Assert.fail("Exception " + e);
     } 
   }
-  
+  */
 }

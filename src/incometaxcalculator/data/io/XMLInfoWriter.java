@@ -11,30 +11,20 @@ import incometaxcalculator.data.management.TaxpayerManager;
 ///////////////////////////////////////////
 public class XMLInfoWriter extends InfoWriter {
 
-  /*
-  public void generateFile(int taxRegistrationNumber) throws IOException {
-    //////////////////////////////////////////
-    TaxpayerManager manager = new TaxpayerManager();
-    ////////////////////////////////////////////////////
-    PrintWriter outputStream = new PrintWriter(
-        new java.io.FileWriter(taxRegistrationNumber + "_INFO.xml"));
-    outputStream.println("<Name> " + manager.getTaxpayerName(taxRegistrationNumber) + " </Name>");
-    outputStream.println("<AFM> " + taxRegistrationNumber + " </AFM>");
-    outputStream.println("<Status> " + manager.getTaxpayerStatus(taxRegistrationNumber) + " </Status>");
-    outputStream.println("<Income> " + manager.getTaxpayerIncome(taxRegistrationNumber) + " </Income>");
-    outputStream.println();// den mas emfanize to \n se aplo notepad
-    outputStream.println("<Receipts>");
-    outputStream.println();
-    generateTaxpayerReceipts(taxRegistrationNumber, outputStream);
-    outputStream.close();
-  }
-*/
+ 
   @Override
   protected String giveTaxpayerInfo(int i) {
-    String[] s = new String[]{"_INFO.xml","<Name>: ","<AFM>: ","<Status>: ","<Income>: ","<Receipts>:"};
+    String[] s = new String[]{"_INFO.xml","<Name>: ","<AFM>: ","<Status>: ","<Income>: ","<Receipts>:","</Name>: ","</AFM>: ","</Status>: ","</Income>: ","</Receipts>:"};
     //System.out.println(s[1]);
     return  s[i];
-  };
+  }
+  
+  @Override
+  protected String giveReceiptInfo(int i) {
+    String[] s = new String[]{"<Receipt ID> ","<Date> ","<Kind> ","<Amount> ","<Company> ","<Country> ", "<City> ","<Street> ","<Number> "};
+    //System.out.println(s[1]);
+    return  s[i];
+  }
   
   public int getReceiptId(Receipt receipt) {
     return receipt.getId();
@@ -72,33 +62,4 @@ public class XMLInfoWriter extends InfoWriter {
     return receipt.getCompany().getNumber();
   }
   
-  /*
-  private void generateTaxpayerReceipts(int taxRegistrationNumber, PrintWriter outputStream) {
-    /////////////////////////////////////////
-    TaxpayerManager manager = new TaxpayerManager();
-    ////////////////////////////////////////////
-    HashMap<Integer, Receipt> receiptsHashMap = manager.getReceiptHashMap(taxRegistrationNumber);
-    Iterator<HashMap.Entry<Integer, Receipt>> iterator = receiptsHashMap.entrySet().iterator();
-    while (iterator.hasNext()) {
-      HashMap.Entry<Integer, Receipt> entry = iterator.next();
-      Receipt receipt = entry.getValue();
-      outputStream.println("<ReceiptID> " + getReceiptId(receipt) + " </ReceiptID>");
-      outputStream.println("<Date> " + getReceiptIssueDate(receipt) + " </Date>");
-      outputStream.println("<Kind> " + getReceiptKind(receipt) + " </Kind>");
-      outputStream.println("<Amount> " + getReceiptAmount(receipt) + " </Amount>");
-      outputStream.println("<Company> " + getCompanyName(receipt) + " </Company>");
-      outputStream.println("<Country> " + getCompanyCountry(receipt) + " </Country>");
-      outputStream.println("<City> " + getCompanyCity(receipt) + " </City>");
-      outputStream.println("<Street> " + getCompanyStreet(receipt) + " </Street>");
-      outputStream.println("<Number> " + getCompanyNumber(receipt) + " </Number>");
-      outputStream.println();
-    }
-  }
-*/
-  @Override
-  protected String giveReceiptInfo(int i) {
-    String[] s = new String[]{"<ReceiptID> ","<Date> ","<Kind> ","<Amount> ","<Company> ","<Country> ", "<City> ","<Street> ","<Number> "};
-    //System.out.println(s[1]);
-    return  s[i];
-  };
 }

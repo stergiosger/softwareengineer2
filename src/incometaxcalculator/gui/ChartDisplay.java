@@ -1,6 +1,7 @@
 package incometaxcalculator.gui;
 
 import java.awt.BorderLayout;
+import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
 
@@ -37,16 +38,21 @@ class ChartDisplay {
     barChartPanel.setPreferredSize(new java.awt.Dimension(450, 550));
     return barChartPanel;
   }
-
+  private static String createPercentages(double sumOfValues, double value) {
+    double percentage=(value/sumOfValues)*100;
+    DecimalFormat f = new DecimalFormat("##.00");
+    if(percentage==0) return "0";
+    return String.valueOf(f.format(percentage));
+  }
   private static DefaultPieDataset createDefaultPieDataset(double entertainment, double basic,
       double travel, double health, double other) {
-
+    double sumOfValues=entertainment+basic+health+travel+other;
     DefaultPieDataset pieChartDataset = new DefaultPieDataset();
-    pieChartDataset.setValue("Entertainment", entertainment);
-    pieChartDataset.setValue("Basic", basic);
-    pieChartDataset.setValue("Travel", travel);
-    pieChartDataset.setValue("Health", health);
-    pieChartDataset.setValue("Other", other);
+    pieChartDataset.setValue("Entertainment "+createPercentages(sumOfValues,entertainment)+"%", entertainment);
+    pieChartDataset.setValue("Basic "+createPercentages(sumOfValues,basic)+"%",basic);
+    pieChartDataset.setValue("Travel "+createPercentages(sumOfValues,travel)+"%",travel);
+    pieChartDataset.setValue("Health "+createPercentages(sumOfValues,health)+"%",health);
+    pieChartDataset.setValue("Other "+createPercentages(sumOfValues,other)+"%",other);
     return pieChartDataset;
   }
 

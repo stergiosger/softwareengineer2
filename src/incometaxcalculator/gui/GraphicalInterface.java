@@ -8,11 +8,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -25,6 +27,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 
 import incometaxcalculator.data.management.TaxpayerManager;
 import incometaxcalculator.exceptions.WrongFileEndingException;
@@ -119,6 +123,58 @@ public class GraphicalInterface extends JFrame {
     JButton btnLoadTaxpayer = new JButton("Load Taxpayer");
     btnLoadTaxpayer.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
+        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView());
+        fileChooser.setDialogTitle("Specify a Taxpayer file to load");
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text Documents", "txt"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("XML Documents", "xml"));
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        
+        int userSelection=fileChooser.showOpenDialog(btnLoadTaxpayer);
+        //int chooseOption=fileChooser.showOpenDialog(null);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+          String taxRegistrationFileName=fileChooser.getSelectedFile().getName();
+          while(!taxRegistrationFileName.contains("_INFO") || taxRegistrationFileName.length()!=18) {
+            JOptionPane.showMessageDialog(null,
+                "The file name must start with 9 digit.\n"
+                    + "Must end to '_INFO.txt' or '_INFO.xml'\n" 
+                    + " Try again.");
+            userSelection=fileChooser.showOpenDialog(btnLoadTaxpayer);
+            taxRegistrationFileName=fileChooser.getSelectedFile().getName();
+          }
+          int taxRegistrationNumber;
+          if(taxRegistrationFileName.contains("txt")) taxRegistrationNumber=Integer.valueOf(taxRegistrationFileName.replace("_INFO.txt", ""));
+          else taxRegistrationNumber=Integer.valueOf(taxRegistrationFileName.replace("_INFO.xml", ""));
+          
+          try {
+            if (taxpayerManager.containsTaxpayer(taxRegistrationNumber)) {
+              JOptionPane.showMessageDialog(null, "This taxpayer is already loaded.");
+            } else {
+              taxpayerManager.loadTaxpayer(taxRegistrationFileName);
+              taxRegisterNumberModel.addElement(String.valueOf(taxRegistrationNumber));
+            }
+            
+          }catch (NumberFormatException e1) {
+            JOptionPane.showMessageDialog(null,
+                "The tax registration number must have only digits.");
+          } catch (IOException e1) {
+            JOptionPane.showMessageDialog(null, "The file doesn't exists.");
+          } catch (WrongFileFormatException e1) {
+            JOptionPane.showMessageDialog(null, "Please check your file format and try again.");
+          } catch (WrongFileEndingException e1) {
+            JOptionPane.showMessageDialog(null, "Please check your file ending and try again.");
+          } catch (WrongTaxpayerStatusException e1) {
+            JOptionPane.showMessageDialog(null, "Please check taxpayer's status and try again.");
+          } catch (WrongReceiptKindException e1) {
+            JOptionPane.showMessageDialog(null, "Please check receipts kind and try again.");
+          } catch (WrongReceiptDateException e1) {
+            JOptionPane.showMessageDialog(null,
+                "Please make sure your date is " + "DD/MM/YYYY and try again.");
+          }
+          
+        }
+        
+        /*
         int answer = JOptionPane.showConfirmDialog(null, fileLoaderPanel, "",
             JOptionPane.OK_CANCEL_OPTION);
         if (answer == 0) {
@@ -166,7 +222,7 @@ public class GraphicalInterface extends JFrame {
             }
           }
 
-        }
+        }*/
       }
     });
     btnLoadTaxpayer.setBounds(0, 0, 146, 23);
@@ -176,6 +232,41 @@ public class GraphicalInterface extends JFrame {
     btnSelectTaxpayer.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (taxpayerManager.containsTaxpayer()) {
+          String[] taxRegistrationNumbersList=new String[taxRegisterNumberList.getModel().getSize()];
+          for(int i=0; i<taxRegistrationNumbersList.length; i++) {
+            taxRegistrationNumbersList[i]=String.valueOf(taxRegisterNumberList.getModel().getElementAt(i));
+          }
+          String gettaxRegistrationNumber=(String) JOptionPane.showInputDialog(
+              null,
+              "What Tax Registration Number do you want to choose?",
+              "Choose Tax Registration Number",
+              JOptionPane.QUESTION_MESSAGE,
+              null,
+              taxRegistrationNumbersList,
+              null);
+          if (taxRegistrationNumbersList != null) {
+          int taxRegistrationNumber;
+            try {
+              taxRegistrationNumber = Integer.parseInt(gettaxRegistrationNumber);
+              if (taxpayerManager.containsTaxpayer(taxRegistrationNumber)) {
+                TaxpayerData taxpayerData = new TaxpayerData(taxRegistrationNumber,
+                    taxpayerManager);
+                taxpayerData.setVisible(true);
+              } else {
+                JOptionPane.showMessageDialog(null, "This tax registration number isn't loaded.");
+              }
+            } catch (NumberFormatException e1) {
+              JOptionPane.showMessageDialog(null, "You must give a tax registation number.");
+            } catch (Exception e1) {
+              e1.printStackTrace();
+            }
+          }
+        } else {
+          JOptionPane.showMessageDialog(null,
+              "There isn't any taxpayer loaded. Please load one first.");
+        }
+        
+        /*if (taxpayerManager.containsTaxpayer()) {
           String trn = JOptionPane.showInputDialog(null,
               "Give the tax registration number " + "that you want to be displayed : ");
           if (trn != null) {
@@ -198,9 +289,10 @@ public class GraphicalInterface extends JFrame {
         } else {
           JOptionPane.showMessageDialog(null,
               "There isn't any taxpayer loaded. Please load one first.");
-        }
+        }*/
       }
     });
+    
     btnSelectTaxpayer.setBounds(147, 0, 139, 23);
     contentPane.add(btnSelectTaxpayer);
 

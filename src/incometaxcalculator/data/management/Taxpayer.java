@@ -22,8 +22,24 @@ public abstract class Taxpayer {
     receiptKinds.put("OTHER",4);
   }
   
-  public abstract double calculateBasicTax();
 
+  abstract int getLimitArray(int i);
+  abstract double getResultArray(int i);
+
+  public double calculateBasicTax() {
+    if (income < getLimitArray(0)) {
+      return getResultArray(0);
+    } else if (income < getLimitArray(1)) {
+      return getResultArray(1);
+    } else if (income < getLimitArray(2)) {
+      return getResultArray(2);
+    } else if (income < getLimitArray(3)) {
+      return getResultArray(4);
+    } else {
+      return getResultArray(4);
+    }
+  }
+  
   protected Taxpayer(String fullname, int taxRegistrationNumber, float income) {
     this.fullname = fullname;
     this.taxRegistrationNumber = taxRegistrationNumber;

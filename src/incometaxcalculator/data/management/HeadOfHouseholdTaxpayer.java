@@ -6,18 +6,16 @@ public class HeadOfHouseholdTaxpayer extends Taxpayer {
     super(fullname, taxRegistrationNumber, income);
   }
 
-  public double calculateBasicTax() {
-    if (income < 30390) {
-      return 0.0535 * income;
-    } else if (income < 90000) {
-      return 1625.87 + 0.0705 * (income - 30390);
-    } else if (income < 122110) {
-      return 5828.38 + 0.0705 * (income - 90000);
-    } else if (income < 203390) {
-      return 8092.13 + 0.0785 * (income - 122110);
-    } else {
-      return 14472.61 + 0.0985 * (income - 203390);
-    }
+  @Override
+  protected int getLimitArray(int i) {
+    int[] array=new int[] {30390,90000,122110,203390};
+    return array[i];
+  }
+  
+  @Override
+  protected double getResultArray(int i) {
+    double[] array=new double[] {0.0535 * income,1625.87 + 0.0705 * (income - 30390),5828.38 + 0.0705 * (income - 90000),8092.13 + 0.0785 * (income - 122110),14472.61 + 0.0985 * (income - 203390)};
+    return array[i];
   }
 
 }

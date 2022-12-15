@@ -1,28 +1,23 @@
 package incometaxcalculator.data.io;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Iterator;
+
 
 import incometaxcalculator.data.management.Receipt;
-/////////////////////////////////////////
-import incometaxcalculator.data.management.TaxpayerManager;
-///////////////////////////////////////////
+
+
+
 public class XMLInfoWriter extends InfoWriter {
 
  
   @Override
   protected String giveTaxpayerInfo(int i) {
     String[] s = new String[]{"_INFO.xml","<Name>: ","<AFM>: ","<Status>: ","<Income>: ","<Receipts>:","</Name>: ","</AFM>: ","</Status>: ","</Income>: ","</Receipts>:"};
-    //System.out.println(s[1]);
     return  s[i];
   }
   
   @Override
   protected String giveReceiptInfo(int i) {
-    String[] s = new String[]{"<Receipt ID> ","<Date> ","<Kind> ","<Amount> ","<Company> ","<Country> ", "<City> ","<Street> ","<Number> "};
-    //System.out.println(s[1]);
+    String[] s = new String[]{"<ReceiptID> ","<Date> ","<Kind> ","<Amount> ","<Company> ","<Country> ", "<City> ","<Street> ","<Number>","</ReceiptID> ","</Date> ","</Kind> ","</Amount> ","</Company> ","</Country> ", "</City> ","</Street> ","</Number>"};
     return  s[i];
   }
   

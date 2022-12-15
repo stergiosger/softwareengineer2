@@ -191,9 +191,7 @@ public class TaxpayerData extends JFrame {
         JPanel boxPanel = new JPanel(new BorderLayout());
         JPanel taxRegistrationNumberPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         JLabel TRN = new JLabel("Choose file format.");
-        // JTextField taxRegistrationNumberField = new JTextField(20);
-        taxRegistrationNumberPanel.add(TRN);
-        // taxRegistrationNumberPanel.add(taxRegistrationNumberField);
+        taxRegistrationNumberPanel.add(TRN);       
         JPanel loadPanel = new JPanel(new GridLayout(1, 2));
         loadPanel.add(taxRegistrationNumberPanel);
         fileLoaderPanel.add(boxPanel, BorderLayout.NORTH);

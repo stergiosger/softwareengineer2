@@ -7,14 +7,12 @@ public class TXTInfoWriter extends InfoWriter {
   @Override
   protected String giveTaxpayerInfo(int i) {
     String[] s = new String[]{"_INFO.txt","Name: ","AFM: ","Status: ","Income: ","Receipts:"," "," "," "," "," "};
-    //System.out.println(s[1]);
     return  s[i];
   }
   
   @Override
   protected String giveReceiptInfo(int i) {
     String[] s = new String[]{"Receipt ID: ","Date: ","Kind: ","Amount: ","Company: ","Country: ", "City: ","Street: ","Number: "};
-    //System.out.println(s[1]);
     return  s[i];
   }
   

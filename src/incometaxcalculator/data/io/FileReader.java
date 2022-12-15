@@ -12,10 +12,6 @@ import incometaxcalculator.exceptions.WrongTaxpayerStatusException;
 
 public abstract class FileReader {
 
-//  protected abstract int checkForReceipt(BufferedReader inputStream)
- //     throws NumberFormatException, IOException;
-
-  //protected abstract String getValueOfField(String fieldsLine) throws WrongFileFormatException;
   
   protected abstract int getReceiptId(String[] values);
   protected abstract String getValueOfSubFields(String[] values);

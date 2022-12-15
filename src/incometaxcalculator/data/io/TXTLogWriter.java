@@ -6,7 +6,6 @@ public class TXTLogWriter extends LogWriter{
   @Override
   protected String giveLogInfo(int i) {
     String[] s = new String[]{"_LOG.txt","Name: ","AFM: ","Income: ","Basic Tax: ","Tax Increase: ", "Tax Decrease: ","Total Tax: ","TotalReceiptsGathered: ","Entertainment: ","Basic: ","Travel: ","Health: ","Other: "," "," "," "," "," "," "," "," "," "," "," "," "," "};
-    //System.out.println(s[1]);
     return  s[i];
   };
 }

@@ -67,24 +67,6 @@ public abstract class Taxpayer {
     }
     totalReceiptsGathered--;
     receiptHashMap.remove(receiptId);
-    
-    /*
-    if (receipt.getKind().equals("Entertainment")) {
-      amountPerReceiptsKind[ENTERTAINMENT] -= receipt.getAmount();
-    } else if (receipt.getKind().equals("Basic")) {
-      amountPerReceiptsKind[BASIC] -= receipt.getAmount();
-    } else if (receipt.getKind().equals("Travel")) {
-      amountPerReceiptsKind[TRAVEL] -= receipt.getAmount();
-    } else if (receipt.getKind().equals("Health")) {
-      amountPerReceiptsKind[HEALTH] -= receipt.getAmount();
-    } else if (receipt.getKind().equals("Other")) {
-      amountPerReceiptsKind[OTHER] -= receipt.getAmount();
-    } else {
-      throw new WrongReceiptKindException();
-    }
-    totalReceiptsGathered--;
-    receiptHashMap.remove(receiptId);
-    */
   }
 
   public String getFullname() {

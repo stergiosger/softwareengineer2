@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
@@ -41,7 +40,6 @@ public class GraphicalInterface extends JFrame {
 
   private JPanel contentPane;
   private TaxpayerManager taxpayerManager = new TaxpayerManager();
-  private String taxpayersTRN = new String();
   private JTextField txtTaxRegistrationNumber;
 
   public static void main(String[] args) {
@@ -173,56 +171,6 @@ public class GraphicalInterface extends JFrame {
           }
           
         }
-        
-        /*
-        int answer = JOptionPane.showConfirmDialog(null, fileLoaderPanel, "",
-            JOptionPane.OK_CANCEL_OPTION);
-        if (answer == 0) {
-          String taxRegistrationNumber = taxRegistrationNumberField.getText();
-          while (taxRegistrationNumber.length() != 9 && answer == 0) {
-            JOptionPane.showMessageDialog(null,
-                "The tax  registration number must have 9 digit.\n" + " Try again.");
-            answer = JOptionPane.showConfirmDialog(null, fileLoaderPanel, "",
-                JOptionPane.OK_CANCEL_OPTION);
-            taxRegistrationNumber = taxRegistrationNumberField.getText();
-          }
-          if (answer == 0) {
-            int trn = 0;
-            String taxRegistrationNumberFile;
-            try {
-              trn = Integer.parseInt(taxRegistrationNumber);
-              if (txtBox.isSelected()) {
-                taxRegistrationNumberFile = taxRegistrationNumber + "_INFO.txt";
-              } else {
-                taxRegistrationNumberFile = taxRegistrationNumber + "_INFO.xml";
-              }
-              if (taxpayerManager.containsTaxpayer(trn)) {
-                JOptionPane.showMessageDialog(null, "This taxpayer is already loaded.");
-              } else {
-                taxpayerManager.loadTaxpayer(taxRegistrationNumberFile);
-                taxRegisterNumberModel.addElement(taxRegistrationNumber);
-              }
-              // textPane.setText(taxpayersTRN);
-            } catch (NumberFormatException e1) {
-              JOptionPane.showMessageDialog(null,
-                  "The tax registration number must have only digits.");
-            } catch (IOException e1) {
-              JOptionPane.showMessageDialog(null, "The file doesn't exists.");
-            } catch (WrongFileFormatException e1) {
-              JOptionPane.showMessageDialog(null, "Please check your file format and try again.");
-            } catch (WrongFileEndingException e1) {
-              JOptionPane.showMessageDialog(null, "Please check your file ending and try again.");
-            } catch (WrongTaxpayerStatusException e1) {
-              JOptionPane.showMessageDialog(null, "Please check taxpayer's status and try again.");
-            } catch (WrongReceiptKindException e1) {
-              JOptionPane.showMessageDialog(null, "Please check receipts kind and try again.");
-            } catch (WrongReceiptDateException e1) {
-              JOptionPane.showMessageDialog(null,
-                  "Please make sure your date is " + "DD/MM/YYYY and try again.");
-            }
-          }
-
-        }*/
       }
     });
     btnLoadTaxpayer.setBounds(0, 0, 146, 23);
@@ -265,31 +213,6 @@ public class GraphicalInterface extends JFrame {
           JOptionPane.showMessageDialog(null,
               "There isn't any taxpayer loaded. Please load one first.");
         }
-        
-        /*if (taxpayerManager.containsTaxpayer()) {
-          String trn = JOptionPane.showInputDialog(null,
-              "Give the tax registration number " + "that you want to be displayed : ");
-          if (trn != null) {
-            int taxRegistrationNumber;
-            try {
-              taxRegistrationNumber = Integer.parseInt(trn);
-              if (taxpayerManager.containsTaxpayer(taxRegistrationNumber)) {
-                TaxpayerData taxpayerData = new TaxpayerData(taxRegistrationNumber,
-                    taxpayerManager);
-                taxpayerData.setVisible(true);
-              } else {
-                JOptionPane.showMessageDialog(null, "This tax registration number isn't loaded.");
-              }
-            } catch (NumberFormatException e1) {
-              JOptionPane.showMessageDialog(null, "You must give a tax registation number.");
-            } catch (Exception e1) {
-              e1.printStackTrace();
-            }
-          }
-        } else {
-          JOptionPane.showMessageDialog(null,
-              "There isn't any taxpayer loaded. Please load one first.");
-        }*/
       }
     });
     

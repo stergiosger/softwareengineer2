@@ -18,9 +18,9 @@ public abstract class InfoWriter implements FileWriter {
   
   
   public void generateFile(int taxRegistrationNumber) throws IOException {
-    ///////////////////////////////////
+
     TaxpayerManager manager = new TaxpayerManager();
-    /////////////////////////////////////
+
     PrintWriter outputStream = new PrintWriter(
         new java.io.FileWriter(taxRegistrationNumber + giveTaxpayerInfo(0) + giveTaxpayerInfo(6)));
     outputStream.println(giveTaxpayerInfo(1) + manager.getTaxpayerName(taxRegistrationNumber) + giveTaxpayerInfo(7));
@@ -35,9 +35,7 @@ public abstract class InfoWriter implements FileWriter {
   }
 
   public void generateTaxpayerReceipts(int taxRegistrationNumber, PrintWriter outputStream) {
-    ///////////////////////////////
     TaxpayerManager manager = new TaxpayerManager();
-    //////////////////////////////////
     HashMap<Integer, Receipt> receiptsHashMap = manager.getReceiptHashMap(taxRegistrationNumber);
     Iterator<HashMap.Entry<Integer, Receipt>> iterator = receiptsHashMap.entrySet().iterator();
     while (iterator.hasNext()) {

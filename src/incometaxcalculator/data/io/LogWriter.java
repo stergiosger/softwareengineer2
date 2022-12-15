@@ -16,9 +16,9 @@ public abstract class LogWriter {
   protected abstract String giveLogInfo(int i);
   
   public void generateFile(int taxRegistrationNumber) throws IOException {
-    ///////////////////////////
+
     TaxpayerManager manager = new TaxpayerManager();
-    //////////////////////////////
+
     PrintWriter outputStream = new PrintWriter(
         new java.io.FileWriter(taxRegistrationNumber + giveLogInfo(0)));
     outputStream.println(giveLogInfo(1) + manager.getTaxpayerName(taxRegistrationNumber) + giveLogInfo(13));
